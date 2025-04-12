@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  creationTimestamp: null
   labels:
-    app: test
-  name: test
+    app: mealie
+  name: mealie
+  namespace: mealie
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
-      app: test
+      app: mealie
   template:
     metadata:
       labels:
-        app: test
+        app: mealie
     spec:
       containers:
-        - image: httpd:alpine3.19
-          name: httpd
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-     maxUnavailable: 1
-     maxSurge: 1
+      - image: ghcr.io/mealie-recipes/mealie:v1.2.0
+        name: mealie
+        ports:
+          - containerPort: 9000
